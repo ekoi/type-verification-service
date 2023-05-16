@@ -13,7 +13,7 @@ from fastapi.security import OAuth2PasswordBearer
 from starlette import status
 
 
-settings = Dynaconf(settings_files=["conf/settings.toml"],
+settings = Dynaconf(settings_files=["conf/settings.toml", "conf/.secrets.toml"],
                     environments=True)
 logging.basicConfig(filename=settings.LOG_FILE, level=settings.LOG_LEVEL,
                     format=settings.LOG_FORMAT)
@@ -49,7 +49,7 @@ async def info():
     return {"name": "Type verification service", "version": __version__}
 
 
-@app.post('/type/{filetype}')
+@app.post('/type/{filetype}', dependencies=[Depends(api_key_auth)])
 async def check_type_verification(filetype: str, request: Request):
     logging.info("Type verification service")
     logging.info("Checking MIME type format...")
