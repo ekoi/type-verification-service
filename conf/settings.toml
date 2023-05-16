@@ -1,6 +1,6 @@
 [default]
 #FastAPI
-fastapi_title = "type-registry-service"
+fastapi_title = "type-verification-service"
 fastapi_description = "This service supports .."
 
 
